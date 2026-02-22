@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prasanna's Portfolio — The Living Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300;1,9..144,700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F2EDE4;
+  --ink: #1C1A15;
+  --gold: #B8892A;
+  --gold-lt: #D4A84B;
+  --sage: #7A8C72;
+  --rust: #9B4F2A;
+  --cream: #FAF7F0;
+  --mist: #E8E2D6;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'DM Mono', monospace;
+  cursor: none;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* CUSTOM CURSOR */
+#cursor {
+  width: 12px; height: 12px;
+  background: var(--gold);
+  border-radius: 50%;
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.15s ease, width 0.2s ease, height 0.2s ease, background 0.2s ease;
+  mix-blend-mode: multiply;
+}
+#cursor-ring {
+  width: 36px; height: 36px;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9998;
+  transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.2s ease;
+  opacity: 0.6;
+}
+body:hover #cursor { transform: translate(-50%, -50%); }
+
+/* NOISE LAYER */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 500;
+}
+
+/* ===================== HERO ===================== */
+.hero {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* TOP HEADER LABEL */
+.top-label {
+  position: absolute;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  z-index: 20;
+  animation: heroReveal 1s 0.1s both;
+}
+
+/* Organic background shapes */
+.hero-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  animation: blobFloat 12s ease-in-out infinite;
+}
+.blob-1 { width: 500px; height: 500px; background: rgba(184,137,42,0.07); top: -100px; left: -150px; animation-delay: 0s; }
+.blob-2 { width: 400px; height: 400px; background: rgba(122,140,114,0.09); bottom: -80px; right: -100px; animation-delay: -4s; }
+.blob-3 { width: 300px; height: 300px; background: rgba(155,79,42,0.05); top: 40%; left: 60%; animation-delay: -8s; }
+
+@keyframes blobFloat {
+  0%, 100% { transform: translate(0,0) scale(1); }
+  33% { transform: translate(30px,-40px) scale(1.05); }
+  66% { transform: translate(-20px,30px) scale(0.97); }
+}
+
+/* FLOATING ICONS - Clickable + Meaningful */
+.floater {
+  position: absolute;
+  pointer-events: auto;
+  cursor: none;
+  animation: floatGentle var(--dur, 8s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+  transition: opacity 0.3s ease;
+  z-index: 15;
+}
+
+.floater:hover { opacity: 0.9 !important; }
+
+@keyframes floatGentle {
+  0%, 100% { transform: translateY(0) rotate(var(--rot-start, 0deg)); }
+  50% { transform: translateY(var(--float-dist, -18px)) rotate(var(--rot-end, 3deg)); }
+}
+
+/* Individual floaters */
+.floater-netflix {
+  width: 70px; height: 70px;
+  top: 12%; right: 15%;
+  --dur: 9s; --delay: -1s;
+  --rot-start: -3deg; --rot-end: 3deg;
+  --float-dist: -16px;
+  opacity: 0.25;
+}
+
+.floater-music {
+  width: 80px; height: 80px;
+  top: 65%; left: 8%;
+  --dur: 10s; --delay: -2s;
+  --rot-start: -4deg; --rot-end: 4deg;
+  --float-dist: -20px;
+  opacity: 0.28;
+}
+
+.floater-thoughts {
+  width: 75px; height: 75px;
+  bottom: 18%; right: 10%;
+  --dur: 11s; --delay: -5s;
+  --rot-start: 2deg; --rot-end: -3deg;
+  --float-dist: -18px;
+  opacity: 0.26;
+}
+
+.floater-journey {
+  width: 85px; height: 85px;
+  top: 22%; left: 6%;
+  --dur: 8s; --delay: -3s;
+  --rot-start: -2deg; --rot-end: 4deg;
+  --float-dist: -14px;
+  opacity: 0.24;
+}
+
+.floater svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* CENTER CONTENT */
+.hero-center {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  max-width: 700px;
+  padding: 2rem;
+  animation: heroReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes heroReveal {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.studio-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+  animation: heroReveal 1s 0.2s both;
+}
+
+.hero-name {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(3.5rem, 9vw, 8rem);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin-bottom: 0.3rem;
+  animation: heroReveal 1s 0.35s both;
+}
+
+.hero-name span {
+  display: block;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 0.45em;
+  letter-spacing: 0.05em;
+  color: var(--gold);
+}
+
+.hero-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: var(--sage);
+  margin-top: 1.5rem;
+  line-height: 1.8;
+  animation: heroReveal 1s 0.5s both;
+}
+
+.hero-divider {
+  width: 40px;
+  height: 1px;
+  background: var(--gold);
+  margin: 1.5rem auto;
+  animation: heroReveal 1s 0.6s both;
+}
+
+.hero-nav {
+  display: flex;
+  gap: 2.5rem;
+  justify-content: center;
+  margin-top: 2rem;
+  animation: heroReveal 1s 0.7s both;
+}
+
+.hero-nav a {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s ease;
+}
+.hero-nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -3px; left: 0;
+  width: 0; height: 1px;
+  background: var(--gold);
+  transition: width 0.3s ease;
+}
+.hero-nav a:hover { color: var(--gold); }
+.hero-nav a:hover::after { width: 100%; }
+
+/* scroll hint */
+.scroll-hint {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  animation: heroReveal 1s 1s both;
+  z-index: 10;
+}
+.scroll-hint-line {
+  width: 1px;
+  height: 50px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  animation: scrollLine 2s ease-in-out infinite;
+}
+@keyframes scrollLine {
+  0% { transform: scaleY(0); transform-origin: top; }
+  50% { transform: scaleY(1); transform-origin: top; }
+  51% { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+.scroll-hint-text {
+  font-size: 0.5rem;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+
+/* ===================== POPUP MODAL ===================== */
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(28,26,21,0.65);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.popup-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.popup-card {
+  background: var(--cream);
+  border: 1px solid var(--gold);
+  padding: 2rem 2.5rem;
+  max-width: 420px;
+  width: 90%;
+  position: relative;
+  box-shadow: 0 12px 40px rgba(28,26,21,0.2);
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
+}
+
+.popup-overlay.active .popup-card {
+  transform: translateY(0);
+}
+
+.popup-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--gold);
+  cursor: none;
+  line-height: 1;
+  padding: 0.3rem;
+  transition: opacity 0.2s ease;
+}
+.popup-close:hover { opacity: 0.6; }
+
+.popup-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+  padding-right: 2rem;
+}
+
+.popup-list {
+  list-style: none;
+}
+
+.popup-list li {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  line-height: 2;
+  color: #4A3E2C;
+  padding-left: 1.2rem;
+  position: relative;
+  font-weight: 300;
+}
+
+.popup-list li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+  font-weight: 400;
+}
+
+/* ===================== ABOUT ===================== */
+.about {
+  padding: 8rem 6vw 6rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  align-items: center;
+  position: relative;
+}
+
+.about-number {
+  font-family: 'Fraunces', serif;
+  font-size: 12rem;
+  font-weight: 700;
+  font-style: italic;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(184,137,42,0.2);
+  line-height: 1;
+  position: absolute;
+  top: 4rem;
+  left: 4vw;
+  pointer-events: none;
+  user-select: none;
+}
+
+.about-text { position: relative; z-index: 2; }
+
+.section-label {
+  font-size: 0.58rem;
+  letter-spacing: 0.35em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.section-label::before {
+  content: '';
+  display: block;
+  width: 30px;
+  height: 1px;
+  background: var(--gold);
+}
+
+.about-heading {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.8rem;
+}
+
+.about-heading em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.about-body {
+  font-size: 0.8rem;
+  line-height: 2;
+  color: #4A3E2C;
+  margin-bottom: 2rem;
+  font-weight: 300;
+}
+
+.about-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  border-top: 1px solid rgba(184,137,42,0.2);
+  padding-top: 1.8rem;
+}
+
+.stat-num {
+  font-family: 'Fraunces', serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  font-style: italic;
+  color: var(--gold);
+  line-height: 1;
+}
+.stat-label {
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--sage);
+  margin-top: 0.3rem;
+}
+
+/* About visual */
+.about-visual {
+  position: relative;
+  height: 420px;
+}
+
+.about-card {
+  position: absolute;
+  background: var(--cream);
+  border: 1px solid rgba(184,137,42,0.2);
+  padding: 1.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.about-card:hover {
+  transform: translate(-4px, -4px) !important;
+  box-shadow: 8px 8px 0 rgba(184,137,42,0.15);
+}
+
+.card-main {
+  width: 280px;
+  top: 60px; left: 20px;
+}
+.card-accent {
+  width: 180px;
+  top: 0; right: 0;
+  background: var(--ink);
+  color: var(--cream);
+}
+.card-small {
+  width: 150px;
+  bottom: 40px; right: 30px;
+}
+
+.about-card-label {
+  font-size: 0.52rem;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+}
+.card-accent .about-card-label { color: rgba(184,137,42,0.7); }
+
+.about-card-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.4;
+}
+.card-accent .about-card-text { color: var(--cream); font-size: 0.75rem; font-style: normal; font-family: 'DM Mono', monospace; line-height: 1.8; }
+
+/* ===================== WORK ===================== */
+.work {
+  padding: 6rem 6vw;
+}
+
+.work-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 4rem;
+  border-bottom: 1px solid rgba(184,137,42,0.15);
+  padding-bottom: 2rem;
+}
+
+.work-title {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1;
+}
+
+.work-count {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  color: var(--sage);
+  text-transform: uppercase;
+}
+
+.projects-grid {
+  display: grid;
+  gap: 2px;
+}
+
+.project-row {
+  display: grid;
+  grid-template-columns: 60px 1fr auto auto;
+  gap: 2rem;
+  align-items: center;
+  padding: 1.8rem 0;
+  border-bottom: 1px solid rgba(184,137,42,0.1);
+  cursor: none;
+  transition: background 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.project-row::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, transparent, rgba(184,137,42,0.04));
+  transform: translateX(-100%);
+  transition: transform 0.4s ease;
+}
+.project-row:hover::before { transform: translateX(0); }
+.project-row:hover .proj-num { color: var(--gold); }
+.project-row:hover .proj-name { transform: translateX(8px); }
+.project-row:hover .proj-arrow { opacity: 1; transform: translateX(0); }
+
+.proj-num {
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  color: var(--sage);
+  transition: color 0.3s ease;
+}
+
+.proj-info { min-width: 0; }
+
+.proj-name {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.3rem, 3vw, 2.2rem);
+  font-weight: 400;
+  font-style: italic;
+  margin-bottom: 0.3rem;
+  transition: transform 0.3s ease;
+}
+
+.proj-desc {
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: var(--sage);
+  text-transform: uppercase;
+}
+
+.proj-tags {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.proj-tag {
+  font-size: 0.52rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.8rem;
+  border: 1px solid rgba(184,137,42,0.3);
+  color: var(--gold);
+}
+
+.proj-arrow {
+  font-size: 1.2rem;
+  color: var(--gold);
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.3s ease;
+}
+
+/* PROJECT HOVER IMAGE */
+.project-hover-img {
+  position: fixed;
+  width: 240px;
+  height: 160px;
+  pointer-events: none;
+  z-index: 200;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border: 1px solid rgba(184,137,42,0.3);
+  overflow: hidden;
+}
+.project-hover-img.visible { opacity: 1; }
+
+/* ===================== CONTACT ===================== */
+.contact {
+  padding: 8rem 6vw;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-bg-text {
+  position: absolute;
+  font-family: 'Fraunces', serif;
+  font-size: 18vw;
+  font-weight: 700;
+  font-style: italic;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(184,137,42,0.08);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.contact-label {
+  font-size: 0.58rem;
+  letter-spacing: 0.35em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+.contact-heading {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(2.8rem, 7vw, 6rem);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 2;
+}
+
+.contact-heading strong {
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.contact-sub {
+  font-size: 0.75rem;
+  line-height: 1.8;
+  color: var(--sage);
+  max-width: 440px;
+  margin: 0 auto 3rem;
+  font-weight: 300;
+  position: relative;
+  z-index: 2;
+}
+
+.contact-email {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--gold);
+  padding-bottom: 0.2rem;
+  transition: color 0.3s ease;
+  position: relative;
+  z-index: 2;
+  display: inline-block;
+}
+.contact-email:hover { color: var(--gold); }
+
+.contact-social {
+  display: flex;
+  gap: 2.5rem;
+  justify-content: center;
+  margin-top: 3rem;
+  position: relative;
+  z-index: 2;
+}
+.contact-social a {
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--sage);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.contact-social a:hover { color: var(--gold); }
+
+/* ===================== FOOTER ===================== */
+footer {
+  border-top: 1px solid rgba(184,137,42,0.15);
+  padding: 2rem 6vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.footer-left {
+  font-family: 'Fraunces', serif;
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--ink);
+  font-weight: 300;
+}
+.footer-right {
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  color: var(--sage);
+  text-transform: uppercase;
+}
+
+/* ART NOUVEAU ORNAMENT SVG */
+.ornament {
+  display: block;
+  margin: 0 auto;
+  opacity: 0.25;
+}
+
+/* ===================== TOOLTIP ===================== */
+.tooltip {
+  position: fixed;
+  background: var(--ink);
+  color: var(--cream);
+  font-size: 0.58rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.4rem 0.8rem;
+  pointer-events: none;
+  z-index: 300;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  white-space: nowrap;
+}
+.tooltip.show { opacity: 1; }
+
+/* SCROLL REVEAL */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 768px) {
+  .about { grid-template-columns: 1fr; gap: 3rem; }
+  .about-visual { height: 280px; }
+  .project-row { grid-template-columns: 40px 1fr; }
+  .proj-tags, .proj-arrow { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- TOOLTIP -->
+<div class="tooltip" id="tooltip"></div>
+
+<!-- POPUP OVERLAY -->
+<div class="popup-overlay" id="popupOverlay">
+  <div class="popup-card" id="popupCard">
+    <button class="popup-close" id="popupClose" aria-label="Close popup">×</button>
+    <h3 class="popup-title" id="popupTitle">Title</h3>
+    <ul class="popup-list" id="popupList"></ul>
+  </div>
+</div>
+
+<!-- ================================================ -->
+<!-- HERO -->
+<!-- ================================================ -->
+<section class="hero">
+  <!-- TOP LABEL -->
+  <div class="top-label">Prasanna's Portfolio</div>
+
+  <!-- Blobs -->
+  <div class="hero-blob blob-1"></div>
+  <div class="hero-blob blob-2"></div>
+  <div class="hero-blob blob-3"></div>
+
+  <!-- CLICKABLE FLOATING ICONS -->
+  
+  <!-- Netflix Icon -->
+  <button class="floater floater-netflix" data-popup="netflix" aria-label="Series I love">
+    <svg viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg">
+      <rect x="12" y="10" width="46" height="50" rx="2" fill="none" stroke="#B8892A" stroke-width="1.2"/>
+      <rect x="20" y="18" width="30" height="34" fill="none" stroke="#B8892A" stroke-width="0.6"/>
+      <!-- N mark inside -->
+      <path d="M28,26 L28,44 M28,26 L40,44 M40,26 L40,44" stroke="#B8892A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <!-- play symbol subtle -->
+      <polygon points="32,22 38,26 32,30" fill="none" stroke="#B8892A" stroke-width="0.5" opacity="0.5"/>
+    </svg>
+  </button>
+
+  <!-- Music Icon -->
+  <button class="floater floater-music" data-popup="music" aria-label="Music I'm into">
+    <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+      <!-- vinyl record -->
+      <circle cx="40" cy="40" r="28" fill="none" stroke="#7A8C72" stroke-width="1.2"/>
+      <circle cx="40" cy="40" r="20" fill="none" stroke="#7A8C72" stroke-width="0.6"/>
+      <circle cx="40" cy="40" r="4" fill="#7A8C72"/>
+      <!-- tone arm suggestion -->
+      <line x1="62" y1="18" x2="50" y2="30" stroke="#7A8C72" stroke-width="1" stroke-linecap="round"/>
+      <circle cx="62" cy="18" r="2" fill="#7A8C72"/>
+    </svg>
+  </button>
+
+  <!-- 2 AM Thoughts Icon -->
+  <button class="floater floater-thoughts" data-popup="thoughts" aria-label="2 AM thoughts">
+    <svg viewBox="0 0 75 75" xmlns="http://www.w3.org/2000/svg">
+      <!-- crescent moon -->
+      <path d="M50,20 A18,18 0 1,1 50,55 A15,15 0 1,0 50,20Z" fill="none" stroke="#9B4F2A" stroke-width="1.2"/>
+      <!-- small sparkle/thought -->
+      <circle cx="28" cy="28" r="2" fill="#9B4F2A" opacity="0.6"/>
+      <circle cx="22" cy="40" r="1.5" fill="#9B4F2A" opacity="0.5"/>
+      <circle cx="30" cy="50" r="1" fill="#9B4F2A" opacity="0.4"/>
+      <!-- tiny stars -->
+      <path d="M60,30 L61,32 L63,31 L61.5,33 L63,35 L61,34 L60,36 L59,34 L57,35 L58.5,33 L57,31 L59,32Z" fill="none" stroke="#9B4F2A" stroke-width="0.5" opacity="0.5"/>
+    </svg>
+  </button>
+
+  <!-- Journey Icon -->
+  <button class="floater floater-journey" data-popup="journey" aria-label="My journey">
+    <svg viewBox="0 0 85 85" xmlns="http://www.w3.org/2000/svg">
+      <!-- airplane simple -->
+      <path d="M42,25 L42,45 M30,35 L42,38 L54,35 M42,45 L38,52 M42,45 L46,52" stroke="#B8892A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <!-- dotted path/route -->
+      <path d="M20,60 Q35,50 50,58 T70,60" stroke="#B8892A" stroke-width="0.8" stroke-dasharray="2,3" fill="none" opacity="0.6"/>
+      <!-- location pin start/end -->
+      <circle cx="20" cy="60" r="2" fill="#B8892A" opacity="0.5"/>
+      <circle cx="70" cy="60" r="2" fill="#B8892A" opacity="0.5"/>
+    </svg>
+  </button>
+
+  <!-- CENTER -->
+  <div class="hero-center">
+    <p class="studio-label">Product Designer & Researcher</p>
+    <h1 class="hero-name">
+      <span>Prasanna Guduru</span>
+      Designing<br>what matters.
+    </h1>
+    <div class="hero-divider"></div>
+    <p class="hero-sub">— turning complexity into clarity</p>
+    <nav class="hero-nav">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-hint-line"></div>
+    <span class="scroll-hint-text">Scroll</span>
+  </div>
+</section>
+
+<!-- ART NOUVEAU ORNAMENTAL DIVIDER -->
+<div style="padding: 2rem 0; text-align:center; background: var(--bg);">
+  <svg class="ornament" width="300" height="30" viewBox="0 0 300 30" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,15 C40,5 60,25 80,15 C100,5 120,25 140,15" fill="none" stroke="#B8892A" stroke-width="1"/>
+    <circle cx="150" cy="15" r="4" fill="#B8892A"/>
+    <path d="M160,15 C180,5 200,25 220,15 C240,5 260,25 300,15" fill="none" stroke="#B8892A" stroke-width="1"/>
+    <circle cx="150" cy="15" r="8" fill="none" stroke="#B8892A" stroke-width="0.5"/>
+  </svg>
+</div>
+
+<!-- ================================================ -->
+<!-- ABOUT -->
+<!-- ================================================ -->
+<section class="about reveal" id="about">
+  <div class="about-number">01</div>
+  <div class="about-text">
+    <p class="section-label">About Prasanna</p>
+    <h2 class="about-heading">
+      I design with<br>
+      <em>intention</em> and<br>
+      research.
+    </h2>
+    <p class="about-body">
+      I'm a product designer and researcher who believes the best interfaces are felt before they're understood. My practice lives at the intersection of human behaviour, systems thinking, and craft — grounded in deep research, expressed in considered design.
+    </p>
+    <p class="about-body">
+      Currently available for full-time roles and select collaborations. Based wherever the work is most interesting.
+    </p>
+    <div class="about-stats">
+      <div>
+        <div class="stat-num">4+</div>
+        <div class="stat-label">Years of practice</div>
+      </div>
+      <div>
+        <div class="stat-num">12</div>
+        <div class="stat-label">Projects shipped</div>
+      </div>
+      <div>
+        <div class="stat-num">3</div>
+        <div class="stat-label">Industries explored</div>
+      </div>
+    </div>
+  </div>
+  <div class="about-visual">
+    <div class="about-card card-accent">
+      <p class="about-card-label">Current Focus</p>
+      <p class="about-card-text">Research-led systems design · 0→1 product development · Design strategy</p>
+    </div>
+    <div class="about-card card-main">
+      <p class="about-card-label">Design Philosophy</p>
+      <p class="about-card-text">"Clarity is kindness. Every friction point is a failure of empathy."</p>
+    </div>
+    <div class="about-card card-small">
+      <p class="about-card-label">Currently reading</p>
+      <p class="about-card-text" style="font-size:0.75rem; font-family:'DM Mono'; line-height:1.6; font-style:normal;">The Elements of Typographic Style</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================ -->
+<!-- WORK -->
+<!-- ================================================ -->
+<section class="work reveal" id="work">
+  <div class="work-header">
+    <div>
+      <p class="section-label">Selected Work</p>
+      <h2 class="work-title">Projects</h2>
+    </div>
+    <span class="work-count">04 case studies</span>
+  </div>
+
+  <div class="projects-grid">
+    <div class="project-row"
+      data-project="Comparative usability study measuring satisfaction, navigation, and friction."
+      data-color="#4A6741">
+      <span class="proj-num">01</span>
+      <div class="proj-info">
+        <div class="proj-name">Uber Eats vs DoorDash Comparative Usability Study</div>
+        <div class="proj-desc">Research · Usability Study · 2024</div>
+      </div>
+      <div class="proj-tags">
+        <span class="proj-tag">Research</span>
+        <span class="proj-tag">Usability Testing</span>
+        <span class="proj-tag">SUS</span>
+      </div>
+      <span class="proj-arrow">→</span>
+    </div>
+
+    <div class="project-row"
+      data-project="Cross-cultural research on Instagram influence using Hofstede's dimensions."
+      data-color="#9B4F2A">
+      <span class="proj-num">02</span>
+      <div class="proj-info">
+        <div class="proj-name">Instagram Cross-Cultural Influence Study (Hofstede)</div>
+        <div class="proj-desc">Research · Cross-cultural Study · 2024</div>
+      </div>
+      <div class="proj-tags">
+        <span class="proj-tag">Research</span>
+        <span class="proj-tag">Cultural UX</span>
+      </div>
+      <span class="proj-arrow">→</span>
+    </div>
+
+    <div class="project-row"
+      data-project="Designed a task management experience with clear IA and usability focus."
+      data-color="#2A6B6E">
+      <span class="proj-num">03</span>
+      <div class="proj-info">
+        <div class="proj-name">Checkmate (To-Do App)</div>
+        <div class="proj-desc">Design · Product Design · 2023</div>
+      </div>
+      <div class="proj-tags">
+        <span class="proj-tag">UX/UI</span>
+        <span class="proj-tag">Design System</span>
+      </div>
+      <span class="proj-arrow">→</span>
+    </div>
+
+    <div class="project-row"
+      data-project="End-to-end design work on flows, layout, and interaction polish."
+      data-color="#6B5C8A">
+      <span class="proj-num">04</span>
+      <div class="proj-info">
+        <div class="proj-name">MileAway</div>
+        <div class="proj-desc">Design · UX/UI · 2023</div>
+      </div>
+      <div class="proj-tags">
+        <span class="proj-tag">UX/UI</span>
+        <span class="proj-tag">Prototype</span>
+      </div>
+      <span class="proj-arrow">→</span>
+    </div>
+  </div>
+</section>
+
+<!-- ORNAMENT DIVIDER 2 -->
+<div style="padding: 2.5rem 0; text-align:center; background: var(--bg);">
+  <svg class="ornament" width="200" height="20" viewBox="0 0 200 20" xmlns="http://www.w3.org/2000/svg">
+    <line x1="0" y1="10" x2="80" y2="10" stroke="#B8892A" stroke-width="0.5"/>
+    <path d="M85,10 C90,3 100,3 100,10 C100,17 110,17 115,10" fill="none" stroke="#B8892A" stroke-width="1"/>
+    <line x1="120" y1="10" x2="200" y2="10" stroke="#B8892A" stroke-width="0.5"/>
+  </svg>
+</div>
+
+<!-- ================================================ -->
+<!-- CONTACT -->
+<!-- ================================================ -->
+<section class="contact reveal" id="contact">
+  <div class="contact-bg-text">Hello</div>
+  <p class="contact-label">Let's work together</p>
+  <h2 class="contact-heading">
+    Got a problem<br>worth <strong>solving?</strong>
+  </h2>
+  <p class="contact-sub">I'm currently open to full-time product design roles, research consultancy, and early-stage collaborations where design can shape the outcome.</p>
+  <a class="contact-email" href="mailto:ukraft.designs@gmail.com">ukraft.designs@gmail.com</a>
+  <div class="contact-social">
+    <a href="#">LinkedIn</a>
+    <a href="#">Resume</a>
+    <a href="#">Dribbble</a>
+    <a href="#">Medium</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-left">Prasanna Portfolio</span>
+  <span class="footer-right">© 2025 — Designed with intention</span>
+</footer>
+
+<!-- PROJECT HOVER PREVIEW -->
+<div class="project-hover-img" id="projectHover">
+  <div id="projectHoverInner" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:1.5rem;">
+    <p id="projectHoverText" style="font-family:'DM Mono',monospace;font-size:0.65rem;line-height:1.7;color:var(--cream);text-align:center;"></p>
+  </div>
+</div>
+
+<script>
+// ====== POPUP DATA ======
+const popupData = {
+  netflix: {
+    title: 'Series I love',
+    items: [
+      'The Crown',
+      'Stranger Things',
+      'Breaking Bad',
+      'Dark'
+    ]
+  },
+  music: {
+    title: 'Music I\'m into',
+    items: [
+      'Lo-fi beats for deep work',
+      'Tame Impala / Indie Rock',
+      'Bollywood classics',
+      'Jazz & Soul essentials'
+    ]
+  },
+  thoughts: {
+    title: '2 AM thoughts',
+    items: [
+      'Why do we design for attention when we crave focus?',
+      'The best ideas come from constraints, not freedom',
+      'What if empathy isn\'t enough — what if we need systems?'
+    ]
+  },
+  journey: {
+    title: 'My journey',
+    items: [
+      'From India to the USA — learning, adapting, building',
+      'What I\'m chasing now: design + research + meaningful work',
+      'Every project is a chance to make complexity feel human'
+    ]
+  }
+};
+
+// ====== POPUP LOGIC ======
+const popupOverlay = document.getElementById('popupOverlay');
+const popupCard = document.getElementById('popupCard');
+const popupTitle = document.getElementById('popupTitle');
+const popupList = document.getElementById('popupList');
+const popupClose = document.getElementById('popupClose');
+
+let currentPopupButton = null;
+
+function openPopup(key) {
+  const data = popupData[key];
+  if (!data) return;
+
+  popupTitle.textContent = data.title;
+  popupList.innerHTML = data.items.map(item => `<li>${item}</li>`).join('');
+  
+  popupOverlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  
+  // Focus trap
+  popupClose.focus();
+}
+
+function closePopup() {
+  popupOverlay.classList.remove('active');
+  document.body.style.overflow = '';
+  if (currentPopupButton) {
+    currentPopupButton.focus();
+    currentPopupButton = null;
+  }
+}
+
+// Click handlers
+document.querySelectorAll('[data-popup]').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    currentPopupButton = btn;
+    openPopup(btn.dataset.popup);
+  });
+});
+
+popupClose.addEventListener('click', closePopup);
+
+// Click outside to close
+popupOverlay.addEventListener('click', (e) => {
+  if (e.target === popupOverlay) closePopup();
+});
+
+// ESC to close
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && popupOverlay.classList.contains('active')) {
+    closePopup();
+  }
+});
+
+// Focus trap inside popup
+popupCard.addEventListener('keydown', (e) => {
+  if (e.key === 'Tab') {
+    const focusable = popupCard.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
+});
+
+// ====== CUSTOM CURSOR ======
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.transform = `translate(${mx - 6}px, ${my - 6}px)`;
+});
+
+function animateRing() {
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ring.style.transform = `translate(${rx - 18}px, ${ry - 18}px)`;
+  requestAnimationFrame(animateRing);
+}
+animateRing();
+
+// Hover state
+document.querySelectorAll('a, button, .project-row, .about-card, [data-popup]').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.width = '20px';
+    cursor.style.height = '20px';
+    cursor.style.background = '#B8892A';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.width = '12px';
+    cursor.style.height = '12px';
+  });
+});
+
+// ====== TOOLTIP ======
+const tooltip = document.getElementById('tooltip');
+document.querySelectorAll('[data-tip]').forEach(el => {
+  el.addEventListener('mouseenter', e => {
+    tooltip.textContent = el.dataset.tip;
+    tooltip.classList.add('show');
+  });
+  el.addEventListener('mousemove', e => {
+    tooltip.style.left = (e.clientX + 15) + 'px';
+    tooltip.style.top = (e.clientY - 30) + 'px';
+  });
+  el.addEventListener('mouseleave', () => tooltip.classList.remove('show'));
+});
+
+// ====== PROJECT HOVER ======
+const projectHover = document.getElementById('projectHover');
+const projectHoverText = document.getElementById('projectHoverText');
+const projectHoverInner = document.getElementById('projectHoverInner');
+
+document.querySelectorAll('.project-row').forEach(row => {
+  row.addEventListener('mouseenter', () => {
+    projectHoverText.textContent = row.dataset.project || '';
+    projectHoverInner.style.background = row.dataset.color || '#1C1A15';
+    projectHover.classList.add('visible');
+  });
+  row.addEventListener('mousemove', e => {
+    projectHover.style.left = (e.clientX + 24) + 'px';
+    projectHover.style.top = (e.clientY - 80) + 'px';
+  });
+  row.addEventListener('mouseleave', () => projectHover.classList.remove('visible'));
+});
+
+// ====== SCROLL REVEAL ======
+const revealEls = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08 });
+revealEls.forEach(el => observer.observe(el));
+
+// ====== FLOATING OBJECTS mouse parallax (COMBINED with animation) ======
+document.addEventListener('mousemove', e => {
+  const cx = window.innerWidth / 2;
+  const cy = window.innerHeight / 2;
+  const dx = (e.clientX - cx) / cx;
+  const dy = (e.clientY - cy) / cy;
+
+  document.querySelectorAll('.floater').forEach((f, i) => {
+    const depth = 0.3 + (i % 3) * 0.25;
+    // Apply parallax as a CSS variable that doesn't override animation
+    f.style.setProperty('--parallax-x', `${dx * 10 * depth}px`);
+    f.style.setProperty('--parallax-y', `${dy * 6 * depth}px`);
+  });
+});
+
+// Update floater animation to include parallax offset
+document.querySelectorAll('.floater').forEach(f => {
+  f.style.setProperty('--parallax-x', '0px');
+  f.style.setProperty('--parallax-y', '0px');
+  
+  // Override animation to combine with parallax
+  const originalAnimation = window.getComputedStyle(f).animation;
+  f.style.animation = 'none';
+  
+  // Reapply with transform that includes both
+  const updateTransform = () => {
+    const px = f.style.getPropertyValue('--parallax-x') || '0px';
+    const py = f.style.getPropertyValue('--parallax-y') || '0px';
+    const currentTransform = window.getComputedStyle(f).transform;
+    if (currentTransform !== 'none') {
+      f.style.transform = `${currentTransform} translate(${px}, ${py})`;
+    }
+    requestAnimationFrame(updateTransform);
+  };
+  
+  f.style.animation = originalAnimation;
+  updateTransform();
+});
+</script>
+</body>
+</html>
